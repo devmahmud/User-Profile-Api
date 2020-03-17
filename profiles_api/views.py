@@ -1,12 +1,15 @@
 from django.shortcuts import render
 
-from rest_framework.viewsets import ViewSet
+from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+from .models import UserProfile
+
 from .serializers import (
     HelloSerializer,
+    UserProfileSerializer
 )
 class HelloApiView(APIView):
     """Test API View."""
@@ -54,7 +57,7 @@ class HelloApiView(APIView):
         return Response({'method': 'delete'})
 
 
-class HelloViewset(ViewSet):
+class HelloViewSet(viewsets.ViewSet):
     """Test API Viewset."""
 
     def list(self, request):
@@ -104,4 +107,8 @@ class HelloViewset(ViewSet):
         return Response({'http_method': 'DELETE'})
 
     
-       
+class UserProfileViewSet(viewsets.ModelViewSet):
+    """Handles creating, and updating profile"""
+
+    serializer_class = UserProfileSerializer
+    queryset = UserProfile.objects.all()
